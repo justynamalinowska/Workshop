@@ -3,7 +3,7 @@ using System.Text;
 
 namespace TimeAndTimePeriod
 {
-    public struct Time
+    public struct Time : IEquatable<Time>, IComparable<Time>
     {
         public readonly byte Hours;
         public readonly byte Minutes;
@@ -78,5 +78,40 @@ namespace TimeAndTimePeriod
 
         public static bool operator ==(Time t1, Time t2) => t1.Equals(t2);
         public static bool operator !=(Time t1, Time t2) => !(t1==t2);
+        
+                //public int CompareTo(Time other) => (3600 * Hours + 60 * Minutes + Seconds - (3600 * other.Hours + 60 * other.Minutes + other.Seconds)).Sign;
+
+        public int CompareTo(Time other)
+        {
+            int t = (3600 * Hours + 60 * Minutes + Seconds - (3600 * other.Hours + 60 * other.Minutes + other.Seconds));
+            if (t == 0)
+                return 0;
+            else if (t > 0)
+                return 1;
+            else
+                return -1;
+        }
+
+        public static bool operator <(Time left, Time right)
+        {
+            return left.CompareTo(right) < 0;
+        }
+
+        public static bool operator <=(Time left, Time right)
+        {
+            return left.CompareTo(right) <= 0;
+        }
+
+        public static bool operator >(Time left, Time right)
+        {
+            return left.CompareTo(right) > 0;
+        }
+
+        public static bool operator >=(Time left, Time right)
+        {
+            return left.CompareTo(right) >= 0;
+        }
+
+    }
     }
 }
