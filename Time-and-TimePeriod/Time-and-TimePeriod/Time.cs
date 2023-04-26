@@ -61,5 +61,22 @@ namespace TimeAndTimePeriod
         {
             return $"{Hours:D}:{Minutes:D}:{Seconds:D}";
         }
+        
+        public bool Equals(Time other) => (Hours == other.Hours && Minutes == other.Minutes && Seconds == other.Seconds);
+        public override bool Equals(object? obj)
+        {
+            if (obj is not null) return false;
+            if (obj is Time other) return Equals(other);
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Hours, Minutes, Seconds);
+        }
+
+        public static bool operator ==(Time t1, Time t2) => t1.Equals(t2);
+        public static bool operator !=(Time t1, Time t2) => !(t1==t2);
     }
 }
