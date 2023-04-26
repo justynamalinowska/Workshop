@@ -56,6 +56,10 @@ namespace TimeAndTimePeriod
             Minutes = Byte.Parse(array[1]);
             Seconds = Byte.Parse(array[2]);
         }
-
+        
+        public override string ToString()
+        {
+            return $"{Hours:D}:{Minutes:D}:{Seconds:D}";
+        }
     }
 }
