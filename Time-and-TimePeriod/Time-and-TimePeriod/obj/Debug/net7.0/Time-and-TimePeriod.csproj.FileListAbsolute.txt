@@ -1,0 +1,15 @@
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/bin/Debug/net7.0/Time-and-TimePeriod
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/bin/Debug/net7.0/Time-and-TimePeriod.deps.json
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/bin/Debug/net7.0/Time-and-TimePeriod.runtimeconfig.json
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/bin/Debug/net7.0/Time-and-TimePeriod.dll
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/bin/Debug/net7.0/Time-and-TimePeriod.pdb
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/obj/Debug/net7.0/Time-and-TimePeriod.csproj.AssemblyReference.cache
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/obj/Debug/net7.0/Time-and-TimePeriod.GeneratedMSBuildEditorConfig.editorconfig
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/obj/Debug/net7.0/Time-and-TimePeriod.AssemblyInfoInputs.cache
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/obj/Debug/net7.0/Time-and-TimePeriod.AssemblyInfo.cs
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/obj/Debug/net7.0/Time-and-TimePeriod.csproj.CoreCompileInputs.cache
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/obj/Debug/net7.0/Time-and-TimePeriod.dll
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/obj/Debug/net7.0/refint/Time-and-TimePeriod.dll
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/obj/Debug/net7.0/Time-and-TimePeriod.pdb
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/obj/Debug/net7.0/Time-and-TimePeriod.genruntimeconfig.cache
+/Users/justynamalinowska/Projects/Time-and-TimePeriod/Time-and-TimePeriod/obj/Debug/net7.0/ref/Time-and-TimePeriod.dll
