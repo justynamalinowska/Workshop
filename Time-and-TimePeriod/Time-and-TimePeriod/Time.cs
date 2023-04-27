@@ -1,43 +1,43 @@
-﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System;
 
 namespace TimeAndTimePeriod
 {
-    public struct Time : IEquatable<Time>, IComparable<Time>
+    /// <summary>
+    /// Represents a time with hours, minutes and seconds..
+    /// </summary>
+    public readonly struct Time : IEquatable<Time>, IComparable<Time>
     {
+        /// <summary>
+        /// Gets or sets value of hours, minutes and seconds at certain Time.
+        /// </summary>
+
         public readonly byte Hours;
         public readonly byte Minutes;
         public readonly byte Seconds;
 
-        public Time(byte hours, byte minutes, byte seconds)
+        /// <summary>
+        /// Creates a new instance of the Time class with the specified hours, minutes and seconds.
+        /// </summary>
+        /// <param name="hours">The hours of the Time.</param>
+        /// <param name="minutes">The minutes of the Time.</param>
+        /// <param name="seconds">The seconds of the Time.</param>
+
+        public Time(byte hours=00, byte minutes=00, byte seconds=00)
         {
             if (hours > 23 || minutes > 59 || seconds > 59)
                 throw new ArgumentOutOfRangeException();
 
-            Hours = hours;
-            Minutes = minutes;
-            Seconds = seconds;
+            Hours = Convert.ToByte(hours % 24);
+            Minutes = Convert.ToByte(minutes % 60);
+            Seconds = Convert.ToByte(seconds % 60);
         }
 
-        public Time(byte hours, byte minutes)
-        {
-            if (hours > 23 || minutes > 59)
-                throw new ArgumentOutOfRangeException();
-
-            Hours = hours;
-            Minutes = minutes;
-            Seconds = 00;
-        }
-
-        public Time(byte hours)
-        {
-            if (hours > 23)
-                throw new ArgumentOutOfRangeException();
-
-            Hours = hours;
-            Minutes = 00;
-            Seconds = 00;
-        }
         public Time()
         {
             Hours = 00;
@@ -45,27 +45,37 @@ namespace TimeAndTimePeriod
             Seconds = 00;
         }
 
-        public Time(string s) // s = hh:mm:ss
+        /// <summary>
+        /// Creates a new instance of the Time class with the specified hours, minutes and seconds.
+        /// </summary>
+        /// <param name="text">Parameters input by hh:mm:ss patern.</param>
+        public Time(string text) 
         {
-            if (s.Length != 8)
-                throw new Exception("Wrong input try with the pattern: hh:mm:ss");
+            if (text.Length != 8)
+                throw new Exception("Wrong input try with this pattern: hh:mm:ss");
 
-            string[] array = s.Split(':');
+            string[] array = text.Split(':');
+            byte h = Byte.Parse(array[0]);
+            byte m = Byte.Parse(array[1]);
+            byte s = Byte.Parse(array[2]);
 
-            Hours = Byte.Parse(array[0]);
-            Minutes = Byte.Parse(array[1]);
-            Seconds = Byte.Parse(array[2]);
+            if ( h > 23 || m > 59 || s > 59)
+                throw new ArgumentOutOfRangeException();
+            
+            Hours = h;
+            Minutes = m;
+            Seconds = s;
         }
-        
-        public override string ToString()
-        {
-            return $"{Hours:D}:{Minutes:D}:{Seconds:D}";
-        }
-        
+
+        /// <summary>
+        /// Returns a string that represents the current Time.
+        /// </summary>
+        /// <returns>A string that represents the current Time.</returns>
+        public override string ToString() => $"{Hours:D}:{Minutes:D}:{Seconds:D}";
+
         public bool Equals(Time other) => (Hours == other.Hours && Minutes == other.Minutes && Seconds == other.Seconds);
         public override bool Equals(object? obj)
         {
-            if (obj is not null) return false;
             if (obj is Time other) return Equals(other);
 
             return false;
@@ -78,8 +88,8 @@ namespace TimeAndTimePeriod
 
         public static bool operator ==(Time t1, Time t2) => t1.Equals(t2);
         public static bool operator !=(Time t1, Time t2) => !(t1==t2);
-        
-                //public int CompareTo(Time other) => (3600 * Hours + 60 * Minutes + Seconds - (3600 * other.Hours + 60 * other.Minutes + other.Seconds)).Sign;
+
+        //public int CompareTo(Time other) => (3600 * Hours + 60 * Minutes + Seconds - (3600 * other.Hours + 60 * other.Minutes + other.Seconds)).Sign;
 
         public int CompareTo(Time other)
         {
