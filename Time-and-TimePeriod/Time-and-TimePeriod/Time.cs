@@ -30,7 +30,7 @@ namespace TimeAndTimePeriod
 
         public Time(byte hours=00, byte minutes=00, byte seconds=00)
         {
-            if (hours > 23 || minutes > 59 || seconds > 59)
+            if (minutes > 59 || seconds > 59)
                 throw new ArgumentOutOfRangeException();
 
             Hours = Convert.ToByte(hours % 24);
@@ -73,6 +73,9 @@ namespace TimeAndTimePeriod
         /// <returns>A string that represents the current Time.</returns>
         public override string ToString() => $"{Hours:D}:{Minutes:D}:{Seconds:D}";
 
+        /// <summary>
+        /// Returns if two times are equal to each other.
+        /// </summary>
         public bool Equals(Time other) => (Hours == other.Hours && Minutes == other.Minutes && Seconds == other.Seconds);
         public override bool Equals(object? obj)
         {
@@ -81,46 +84,17 @@ namespace TimeAndTimePeriod
             return false;
         }
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Hours, Minutes, Seconds);
-        }
+        public override int GetHashCode() => HashCode.Combine(Hours, Minutes, Seconds);
 
         public static bool operator ==(Time t1, Time t2) => t1.Equals(t2);
         public static bool operator !=(Time t1, Time t2) => !(t1==t2);
 
-        //public int CompareTo(Time other) => (3600 * Hours + 60 * Minutes + Seconds - (3600 * other.Hours + 60 * other.Minutes + other.Seconds)).Sign;
+        public int CompareTo(Time other) => ((3600 * Hours + 60 * Minutes + Seconds) - (3600 * other.Hours + 60 * other.Minutes + other.Seconds));
 
-        public int CompareTo(Time other)
-        {
-            int t = (3600 * Hours + 60 * Minutes + Seconds - (3600 * other.Hours + 60 * other.Minutes + other.Seconds));
-            if (t == 0)
-                return 0;
-            else if (t > 0)
-                return 1;
-            else
-                return -1;
-        }
-
-        public static bool operator <(Time left, Time right)
-        {
-            return left.CompareTo(right) < 0;
-        }
-
-        public static bool operator <=(Time left, Time right)
-        {
-            return left.CompareTo(right) <= 0;
-        }
-
-        public static bool operator >(Time left, Time right)
-        {
-            return left.CompareTo(right) > 0;
-        }
-
-        public static bool operator >=(Time left, Time right)
-        {
-            return left.CompareTo(right) >= 0;
-        }
+        public static bool operator <(Time left, Time right) => left.CompareTo(right) < 0;
+        public static bool operator <=(Time left, Time right) => left.CompareTo(right) <= 0;
+        public static bool operator >(Time left, Time right) => left.CompareTo(right) > 0;
+        public static bool operator >=(Time left, Time right) => left.CompareTo(right) >= 0;
 
     }
 }
