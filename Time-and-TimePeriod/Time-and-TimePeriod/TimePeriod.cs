@@ -54,7 +54,6 @@ namespace TimeAndTimePeriod
 
             TimeLength = h * 3600 + m * 60 + s;
         }
-
         public override string ToString() => $"{(TimeLength/3600):D2}:{((TimeLength/60)%60):D2}:{(TimeLength%60):D2}";
     }
 }
