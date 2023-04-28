@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace TimeAndTimePeriod
 {
-	public readonly struct TimePeriod
+	public readonly struct TimePeriod : IEquatable<TimePeriod>
 	{
         public readonly long TimeLength;
 
@@ -55,5 +55,18 @@ namespace TimeAndTimePeriod
             TimeLength = h * 3600 + m * 60 + s;
         }
         public override string ToString() => $"{(TimeLength/3600):D2}:{((TimeLength/60)%60):D2}:{(TimeLength%60):D2}";
+		
+	public bool Equals(TimePeriod other) => TimeLength == other.TimeLength;
+        public override bool Equals(object? obj)
+        {
+            if (obj is TimePeriod other) return Equals(other);
+
+            return false;
+        }
+
+        public override int GetHashCode() => HashCode.Combine(TimeLength);
+
+        public static bool operator ==(TimePeriod t1, TimePeriod t2) => t1.Equals(t2);
+        public static bool operator !=(TimePeriod t1, TimePeriod t2) => !(t1 == t2);
     }
 }
