@@ -30,7 +30,7 @@ namespace TimeAndTimePeriod
 
         public Time(byte hours=00, byte minutes=00, byte seconds=00)
         {
-            if (minutes > 59 || seconds > 59)
+            if (hours > 23 ||minutes > 59 || seconds > 59)
                 throw new ArgumentOutOfRangeException();
 
             Hours = Convert.ToByte(hours % 24);
@@ -52,7 +52,8 @@ namespace TimeAndTimePeriod
         public Time(long seconds)
         {
             if (seconds < 0 || seconds > 86399)
-                throw new ArgumentException();
+                throw new ArgumentOutOfRangeException();
+
             Hours = Convert.ToByte(seconds / 3600);
             Minutes = Convert.ToByte((seconds / 60)% 60);
             Seconds = Convert.ToByte(seconds % 60);
@@ -109,15 +110,21 @@ namespace TimeAndTimePeriod
         public static bool operator >(Time left, Time right) => left.CompareTo(right) > 0;
         public static bool operator >=(Time left, Time right) => left.CompareTo(right) >= 0;
 
+        public static Time Plus(Time t, Time t1) => new(t.Hours * 3600 + t.Minutes * 60 + t.Seconds + t1.Hours * 3600 + t1.Minutes * 60 + t1.Seconds);
         public static Time Plus(Time t, TimePeriod tp) => new(t.Hours * 3600 + t.Minutes * 60 + t.Seconds + tp.TimeLength);
+        public Time Plus(Time t) => Plus(this, t);
         public Time Plus(TimePeriod tp) => Plus(this, tp);
 
         public static Time Minus(Time t, TimePeriod tp) => new((t.Hours * 3600 + t.Minutes * 60 + t.Seconds) - tp.TimeLength);
+        public static Time Minus(Time t, Time t1) => new((t.Hours * 3600 + t.Minutes * 60 + t.Seconds) - t1.Hours * 3600 + t1.Minutes * 60 + t1.Seconds);
         public Time Minus(TimePeriod tp) => Minus(this, tp);
+        public Time Minus(Time t1) => Minus(this, t1);
 
         public static Time operator +(Time t, TimePeriod tp) => Plus(t, tp);
+        public static Time operator +(Time t, Time t1) => Plus(t, t1);
         public static Time operator ++(Time t) => new(t.Hours * 3600 + t.Minutes * 60 + t.Seconds + 1); 
         public static Time operator -(Time t, TimePeriod tp) => Minus(t, tp);
+        public static Time operator -(Time t, Time t1) => Minus(t, t1);
         public static Time operator --(Time t) => new(t.Hours * 3600 + t.Minutes * 60 + t.Seconds - 1);
         public static Time operator *(int x, Time t) => new((t.Hours * 3600 + t.Minutes * 60 + t.Seconds) * x);
         public static Time operator /(Time t, int x) => new((t.Hours * 3600 + t.Minutes * 60 + t.Seconds) / x);
