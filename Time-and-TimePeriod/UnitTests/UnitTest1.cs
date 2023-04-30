@@ -384,6 +384,65 @@ namespace UnitTests
         }
     }
     #endregion
+    #region Operator tests ===================================
+    public class UnitTestsTimePeriodOperators
+    {
+        [TestMethod, TestCategory("Operators")]
+        public void UnitTests_overloading_PlusSign_TwoTimePeriod()
+        {
+            var t1 = new TimePeriod(13723);
+            var t2 = new TimePeriod(1500);
+
+            var expectedTime = new TimePeriod(15223);
+
+            TimePeriod actualTime = t1 + t2;
+
+            Assert.AreEqual(expectedTime, actualTime);
+        }
+        [TestMethod, TestCategory("Operators")]
+        public void UnitTests_overloading_Increment()
+        {
+            var t1 = new TimePeriod(13723);
+
+            var expectedTime = new TimePeriod(13724);
+
+            Assert.AreEqual(expectedTime, t1.TimeLength + 1);
+        }
+        [TestMethod, TestCategory("Operators")]
+        public void UnitTests_overloading_Decrement()
+        {
+            var t1 = new TimePeriod(13723);
+
+            var expectedTime = new TimePeriod(13722);
+
+            Assert.AreEqual(expectedTime, t1.TimeLength - 1);
+        }
+        [TestMethod, TestCategory("Operators")]
+        [DataRow(5000, 2, 10000)]
+        [DataRow(11111, 3, 33333)]
+        [DataRow(22222, 4, 88888)]
+        public void UnitTests_overloading_Multiplication(long seconds, int x, long expectedSeconds)
+        {
+            var t1 = new TimePeriod(seconds);
+            TimePeriod actualTime = x * t1;
+            var expectedTime = new TimePeriod(expectedSeconds);
+
+            Assert.AreEqual(actualTime, expectedSeconds);
+        }
+        [TestMethod, TestCategory("Operators")]
+        [DataRow(5000, 2, 2500)]
+        [DataRow(33333, 3, 11111)]
+        [DataRow(88888, 4, 22222)]
+        public void UnitTests_overloading_Division(long seconds, int x, long expectedSeconds)
+        {
+            var t1 = new TimePeriod(seconds);
+            TimePeriod actualTime = t1 / x;
+            var expectedTime = new TimePeriod(expectedSeconds);
+
+            Assert.AreEqual(actualTime, expectedSeconds);
+        }
+    }
+    #endregion
 }
 
 
