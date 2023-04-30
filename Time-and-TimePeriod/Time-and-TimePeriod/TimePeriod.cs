@@ -49,7 +49,7 @@ namespace TimeAndTimePeriod
         }
 
         /// <summary>
-        /// Returns Length of the Time Period.
+        /// Returns a time like a length of the Time Period.
         /// </summary>
         public long GetTimeLength(Time t) => t.Hours * 3600 + t.Minutes * 60 + t.Seconds; 
 
@@ -99,6 +99,19 @@ namespace TimeAndTimePeriod
         public static bool operator <=(TimePeriod left, TimePeriod right) => left.CompareTo(right) <= 0;
         public static bool operator >(TimePeriod left, TimePeriod right) => left.CompareTo(right) > 0;
         public static bool operator >=(TimePeriod left, TimePeriod right) => left.CompareTo(right) >= 0;
+
+        public TimePeriod Plus(TimePeriod other) => new(TimeLength + other.TimeLength);
+        public static TimePeriod Plus(TimePeriod t1, TimePeriod t2) => new(t1.TimeLength + t2.TimeLength);
+
+        public TimePeriod Minus(TimePeriod other) => new(TimeLength - other.TimeLength);
+        public static TimePeriod Minus(TimePeriod t1, TimePeriod t2) => new(Math.Abs(t1.TimeLength - t2.TimeLength));
+
+        public static TimePeriod operator +(TimePeriod t1, TimePeriod t2) => t1.Plus(t2);
+        public static TimePeriod operator -(TimePeriod t1, TimePeriod t2) => t1.Minus(t2);
+        public static TimePeriod operator *(int x, TimePeriod t) => new(x * t.TimeLength);
+        public static TimePeriod operator /(TimePeriod t, int x) => new(t.TimeLength / x);
+        public static TimePeriod operator ++(TimePeriod t) => new(t.TimeLength + 1);
+        public static TimePeriod operator --(TimePeriod t) => new(t.TimeLength - 1);
 
     }
 }
