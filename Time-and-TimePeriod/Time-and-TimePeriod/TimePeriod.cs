@@ -25,7 +25,7 @@ namespace TimeAndTimePeriod
         public TimePeriod(long seconds)
         {
             if (seconds < 0)
-                throw new ArgumentException("Seeconds cannot be minus!");
+                throw new ArgumentOutOfRangeException("Seeconds cannot be minus!");
             TimeLength = seconds;
         }
 
