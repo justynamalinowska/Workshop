@@ -109,6 +109,17 @@ namespace TimeAndTimePeriod
         public static bool operator >(Time left, Time right) => left.CompareTo(right) > 0;
         public static bool operator >=(Time left, Time right) => left.CompareTo(right) >= 0;
 
+        public static Time Plus(Time t, TimePeriod tp) => new(t.Hours * 3600 + t.Minutes * 60 + t.Seconds + tp.TimeLength);
+        public Time Plus(TimePeriod tp) => Plus(this, tp);
 
+        public static Time Minus(Time t, TimePeriod tp) => new((t.Hours * 3600 + t.Minutes * 60 + t.Seconds) - tp.TimeLength);
+        public Time Minus(TimePeriod tp) => Minus(this, tp);
+
+        public static Time operator +(Time t, TimePeriod tp) => Plus(t, tp);
+        public static Time operator ++(Time t) => new(t.Hours * 3600 + t.Minutes * 60 + t.Seconds + 1); 
+        public static Time operator -(Time t, TimePeriod tp) => Minus(t, tp);
+        public static Time operator --(Time t) => new(t.Hours * 3600 + t.Minutes * 60 + t.Seconds - 1);
+        public static Time operator *(int x, Time t) => new((t.Hours * 3600 + t.Minutes * 60 + t.Seconds) * x);
+        public static Time operator /(Time t, int x) => new((t.Hours * 3600 + t.Minutes * 60 + t.Seconds) / x);
     }
 }
