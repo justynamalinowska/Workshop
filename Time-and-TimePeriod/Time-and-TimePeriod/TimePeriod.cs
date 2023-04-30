@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace TimeAndTimePeriod
 {
-	public readonly struct TimePeriod : IEquatable<TimePeriod>
+	public readonly struct TimePeriod : IEquatable<TimePeriod>, IComparable<TimePeriod>
 	{
         public readonly long TimeLength;
 
@@ -68,5 +68,12 @@ namespace TimeAndTimePeriod
 
         public static bool operator ==(TimePeriod t1, TimePeriod t2) => t1.Equals(t2);
         public static bool operator !=(TimePeriod t1, TimePeriod t2) => !(t1 == t2);
+	        public int CompareTo(TimePeriod other) => (int)(TimeLength - other.TimeLength);
+
+        public static bool operator <(TimePeriod left, TimePeriod right) => left.CompareTo(right) < 0;
+        public static bool operator <=(TimePeriod left, TimePeriod right) => left.CompareTo(right) <= 0;
+        public static bool operator >(TimePeriod left, TimePeriod right) => left.CompareTo(right) > 0;
+        public static bool operator >=(TimePeriod left, TimePeriod right) => left.CompareTo(right) >= 0;
+
     }
 }
