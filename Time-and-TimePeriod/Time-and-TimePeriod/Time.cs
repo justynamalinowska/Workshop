@@ -9,7 +9,7 @@ using System;
 namespace TimeAndTimePeriod
 {
     /// <summary>
-    /// Represents a time with hours, minutes and seconds..
+    /// Represents a time with hours, minutes and seconds.
     /// </summary>
     public readonly struct Time : IEquatable<Time>, IComparable<Time>
     {
@@ -46,6 +46,19 @@ namespace TimeAndTimePeriod
         }
 
         /// <summary>
+        /// Creates a new instance of the Time class with the specified seconds.
+        /// </summary>
+        /// /// <param name="seconds">The seconds amount of the Time.</param>
+        public Time(long seconds)
+        {
+            if (seconds < 0 || seconds > 86399)
+                throw new ArgumentException();
+            Hours = Convert.ToByte(seconds / 3600);
+            Minutes = Convert.ToByte((seconds / 60)% 60);
+            Seconds = Convert.ToByte(seconds % 60);
+        }
+
+        /// <summary>
         /// Creates a new instance of the Time class with the specified hours, minutes and seconds.
         /// </summary>
         /// <param name="text">Parameters input by hh:mm:ss patern.</param>
@@ -71,7 +84,7 @@ namespace TimeAndTimePeriod
         /// Returns a string that represents the current Time.
         /// </summary>
         /// <returns>A string that represents the current Time.</returns>
-        public override string ToString() => $"{Hours:D}:{Minutes:D}:{Seconds:D}";
+        public override string ToString() => $"{Hours:D2}:{Minutes:D2}:{Seconds:D2}";
 
         /// <summary>
         /// Returns if two times are equal to each other.
@@ -95,6 +108,7 @@ namespace TimeAndTimePeriod
         public static bool operator <=(Time left, Time right) => left.CompareTo(right) <= 0;
         public static bool operator >(Time left, Time right) => left.CompareTo(right) > 0;
         public static bool operator >=(Time left, Time right) => left.CompareTo(right) >= 0;
+
 
     }
 }
