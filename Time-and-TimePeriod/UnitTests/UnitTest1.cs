@@ -338,6 +338,52 @@ namespace UnitTests
         }
     }
     #endregion
+    
+    #region Equals tests ===================================
+    [TestClass]
+    public class UnitTestsTimeEquals
+    {
+        public void UnitTests_EqualsWithEqualTimes()
+        {
+            var p1 = new Time(22, 4, 39);
+            var p2 = new Time(22, 04, 39);
+
+            Assert.AreEqual(p1, p2);
+        }
+
+
+        public void UnitTests_EqualsWithDifferentTimes()
+        {
+            var p1 = new Time(11, 36, 59);
+            var p2 = new Time(11, 36, 56);
+
+            bool areEqual = p1.Equals(p2);
+
+            Assert.IsFalse(areEqual);
+        }
+    }
+    public class UnitTestsTimePeriodEquals
+    {
+        public void UnitTests_EqualsWithEqualTimePeriods()
+        {
+            var p1 = new TimePeriod(64987);
+            var p2 = new TimePeriod(64987);
+
+            Assert.AreEqual(p1, p2);
+        }
+
+
+        public void UnitTests_EqualsWithDifferentTimePeriods()
+        {
+            var p1 = new TimePeriod(5326);
+            var p2 = new TimePeriod(5329);
+
+            bool areEqual = p1.Equals(p2);
+
+            Assert.IsFalse(areEqual);
+        }
+    }
+    #endregion
 }
 
 
