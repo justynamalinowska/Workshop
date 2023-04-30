@@ -166,146 +166,146 @@ namespace UnitTests
 
     [TestClass]
     public class UnitTestsTimePeriodConstructors
+    {
+        private static byte defaultValue = 0;
+
+        private void AssertTimePeriod(Time t, byte expectedt)
         {
-            private static byte defaultValue = 0;
-
-            private void AssertTimePeriod(Time t, byte expectedt)
-            {
-                Assert.AreEqual(expectedt, t);
-            }
-
-            [TestMethod, TestCategory("Constructors")]
-            public void Constructor_Default()
-            {
-                TimePeriod t = new TimePeriod();
-
-                Assert.AreEqual(defaultValue, t.TimeLength);
-            }
-
-            [DataTestMethod, TestCategory("Constructors")]
-            [DataRow(0, (byte)0, (byte)0, (byte)0)]
-            [DataRow(55820, (byte)15, (byte)30, (byte)20)]
-            [DataRow(86399, (byte)23, (byte)59, (byte)59)]
-            public void Constructor_SecondsGiven_noException(long time, byte expectedH, byte expectedM, byte expectedS)
-            {
-                TimePeriod t = new TimePeriod(time);
-
-                Assert.AreEqual(t.TimeLength, time);
-            }
-
-            [DataTestMethod, TestCategory("Constructors")]
-            [DataRow(-20)]
-            [DataRow(-4656)]
-            [DataRow(-1)]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
-            public void Constructor_SecondsGiven_Exception(long time)
-            {
-                TimePeriod t = new TimePeriod(time);
-            }
-
-            [DataTestMethod, TestCategory("Constructors")]
-            [DataRow((byte)0, (byte)0, (byte)0, 0)]
-            [DataRow((byte)45, (byte)30, (byte)20, 163820)]
-            [DataRow((byte)23, (byte)59, (byte)59, 86399)]
-            public void Constructor_3params_noException(byte h, byte m, byte s, long expectedSeconds)
-            {
-                TimePeriod t = new TimePeriod(h, m, s);
-
-                Assert.AreEqual(t.TimeLength, expectedSeconds);
-            }
-
-            [DataTestMethod, TestCategory("Constructors")]
-            [DataRow((byte)0, (byte)60, (byte)0)]
-            [DataRow((byte)15, (byte)30, (byte)70)]
-            [DataRow((byte)5, (byte)69, (byte)59)]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
-            public void Constructor_3params_Exception(byte h, byte m, byte s)
-            {
-                TimePeriod t = new TimePeriod(h, m, s);
-            }
-
-            [DataTestMethod, TestCategory("Constructors")]
-            [DataRow((byte)0, (byte)0, 0)]
-            [DataRow((byte)45, (byte)30, 163800)]
-            [DataRow((byte)23, (byte)59, 86340)]
-            public void Constructor_2params_noException(byte h, byte m, long expectedSeconds)
-            {
-                TimePeriod t = new TimePeriod(h, m);
-
-                Assert.AreEqual(t.TimeLength, expectedSeconds);
-            }
-
-            [DataTestMethod, TestCategory("Constructors")]
-            [DataRow((byte)0, (byte)60)]
-            [DataRow((byte)15, (byte)90)]
-            [DataRow((byte)5, (byte)69)]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
-            public void Constructor_2params_Exception(byte h, byte m)
-            {
-                TimePeriod t = new TimePeriod(h, m);
-            }
-
-            [DataTestMethod, TestCategory("Constructors")]
-            [DataRow((byte)0, 0)]
-            [DataRow((byte)45, 162000)]
-            [DataRow((byte)23, 82800)]
-            public void Constructor_1params_noException(byte h, long expectedSeconds)
-            {
-                TimePeriod t = new TimePeriod(h);
-
-                Assert.AreEqual(t.TimeLength, expectedSeconds);
-            }
-
-            [DataTestMethod, TestCategory("Constructors")]
-            public void Constructor_2TimeParams_noException()
-            {
-                // Arrange
-                var t1 = new Time(5, 30, 0);
-                var t2 = new Time(8, 45, 10);
-
-                // Act
-                var timePeriod = new TimePeriod(t1, t2);
-
-                // Assert
-                Assert.AreEqual(3, timePeriod.TimeLength / 3600);
-                Assert.AreEqual(15, (timePeriod.TimeLength / 60) % 60);
-                Assert.AreEqual(10, timePeriod.TimeLength % 60);
-            }
-
-            [DataTestMethod, TestCategory("Constructors")]
-            [DataRow("23:59:59", 86399)]
-            [DataRow("00:00:00", 0)]
-            [DataRow("2:30:15", 9015)]
-            [DataRow("10:20:05", 37205)]
-            public void Constructor_stringGiven_noException(string s, long expectedSeconds)
-            {
-                TimePeriod t = new TimePeriod(s);
-
-                Assert.AreEqual(t.TimeLength, expectedSeconds);
-            }
-
-            [DataTestMethod, TestCategory("Constructors")]
-            [DataRow("22:00:80")]
-            [DataRow("00:60:00")]
-            [DataRow("02:30:60")]
-            [DataRow("9:20:95")]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
-            public void Constructor_stringGiven_ArgumentOutOfRangeException(string s)
-            {
-                TimePeriod t = new TimePeriod(s);
-            }
-
-            [DataTestMethod, TestCategory("Constructors")]
-            [DataRow("23:00")]
-            [DataRow("0:40:0")]
-            [DataRow("2:3:0")]
-            [DataRow("25:2:5")]
-            [ExpectedException(typeof(Exception))]
-            public void Constructor_stringGiven_Exception(string s)
-            {
-                TimePeriod t = new TimePeriod(s);
-            }
+            Assert.AreEqual(expectedt, t);
         }
+
+        [TestMethod, TestCategory("Constructors")]
+        public void Constructor_Default()
+        {
+            TimePeriod t = new TimePeriod();
+
+            Assert.AreEqual(defaultValue, t.TimeLength);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow(0, (byte)0, (byte)0, (byte)0)]
+        [DataRow(55820, (byte)15, (byte)30, (byte)20)]
+        [DataRow(86399, (byte)23, (byte)59, (byte)59)]
+        public void Constructor_SecondsGiven_noException(long time, byte expectedH, byte expectedM, byte expectedS)
+        {
+            TimePeriod t = new TimePeriod(time);
+
+            Assert.AreEqual(t.TimeLength, time);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow(-20)]
+        [DataRow(-4656)]
+        [DataRow(-1)]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Constructor_SecondsGiven_Exception(long time)
+        {
+            TimePeriod t = new TimePeriod(time);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow((byte)0, (byte)0, (byte)0, 0)]
+        [DataRow((byte)45, (byte)30, (byte)20, 163820)]
+        [DataRow((byte)23, (byte)59, (byte)59, 86399)]
+        public void Constructor_3params_noException(byte h, byte m, byte s, long expectedSeconds)
+        {
+            TimePeriod t = new TimePeriod(h, m, s);
+
+            Assert.AreEqual(t.TimeLength, expectedSeconds);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow((byte)0, (byte)60, (byte)0)]
+        [DataRow((byte)15, (byte)30, (byte)70)]
+        [DataRow((byte)5, (byte)69, (byte)59)]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Constructor_3params_Exception(byte h, byte m, byte s)
+        {
+            TimePeriod t = new TimePeriod(h, m, s);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow((byte)0, (byte)0, 0)]
+        [DataRow((byte)45, (byte)30, 163800)]
+        [DataRow((byte)23, (byte)59, 86340)]
+        public void Constructor_2params_noException(byte h, byte m, long expectedSeconds)
+        {
+            TimePeriod t = new TimePeriod(h, m);
+
+            Assert.AreEqual(t.TimeLength, expectedSeconds);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow((byte)0, (byte)60)]
+        [DataRow((byte)15, (byte)90)]
+        [DataRow((byte)5, (byte)69)]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Constructor_2params_Exception(byte h, byte m)
+        {
+            TimePeriod t = new TimePeriod(h, m);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow((byte)0, 0)]
+        [DataRow((byte)45, 162000)]
+        [DataRow((byte)23, 82800)]
+        public void Constructor_1params_noException(byte h, long expectedSeconds)
+        {
+            TimePeriod t = new TimePeriod(h);
+
+            Assert.AreEqual(t.TimeLength, expectedSeconds);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        public void Constructor_2TimeParams_noException()
+        {
+            // Arrange
+            var t1 = new Time(5, 30, 0);
+            var t2 = new Time(8, 45, 10);
+
+            // Act
+            var timePeriod = new TimePeriod(t1, t2);
+
+            // Assert
+            Assert.AreEqual(3, timePeriod.TimeLength / 3600);
+            Assert.AreEqual(15, (timePeriod.TimeLength / 60) % 60);
+            Assert.AreEqual(10, timePeriod.TimeLength % 60);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow("23:59:59", 86399)]
+        [DataRow("00:00:00", 0)]
+        [DataRow("2:30:15", 9015)]
+        [DataRow("10:20:05", 37205)]
+        public void Constructor_stringGiven_noException(string s, long expectedSeconds)
+        {
+            TimePeriod t = new TimePeriod(s);
+
+            Assert.AreEqual(t.TimeLength, expectedSeconds);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow("22:00:80")]
+        [DataRow("00:60:00")]
+        [DataRow("02:30:60")]
+        [DataRow("9:20:95")]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Constructor_stringGiven_ArgumentOutOfRangeException(string s)
+        {
+            TimePeriod t = new TimePeriod(s);
+        }
+
+        [DataTestMethod, TestCategory("Constructors")]
+        [DataRow("23:00")]
+        [DataRow("0:40:0")]
+        [DataRow("2:3:0")]
+        [DataRow("25:2:5")]
+        [ExpectedException(typeof(Exception))]
+        public void Constructor_stringGiven_Exception(string s)
+        {
+            TimePeriod t = new TimePeriod(s);
+        }
+    }
 
     #endregion
     #region ToString tests ===================================
@@ -323,7 +323,7 @@ namespace UnitTests
             Assert.AreEqual(expectedStringRepresentation, time.ToString());
         }
     }
-
+    [TestClass]
     public class UnitTestsTimePeriodToString
     {
         [DataTestMethod, TestCategory("String representation")]
@@ -338,7 +338,6 @@ namespace UnitTests
         }
     }
     #endregion
-    
     #region Equals tests ===================================
     [TestClass]
     public class UnitTestsTimeEquals
@@ -351,17 +350,25 @@ namespace UnitTests
             Assert.AreEqual(p1, p2);
         }
 
+        public void UnitTests_EqualsOperatorWithEqualTimes()
+        {
+            var p1 = new Time(23, 4, 39);
+            var p2 = new Time(23, 04, 39);
+            bool areEqual = p1==p2;
+            Assert.IsTrue(areEqual);
+        }
 
-        public void UnitTests_EqualsWithDifferentTimes()
+        public void UnitTests_EqualsOperatorsWithDifferentTimes()
         {
             var p1 = new Time(11, 36, 59);
-            var p2 = new Time(11, 36, 56);
+            var p2 = new Time(11, 32, 56);
 
-            bool areEqual = p1.Equals(p2);
+            bool areEqual = p1!=p2;
 
-            Assert.IsFalse(areEqual);
+            Assert.IsTrue(areEqual);
         }
     }
+    [TestClass]
     public class UnitTestsTimePeriodEquals
     {
         public void UnitTests_EqualsWithEqualTimePeriods()
@@ -382,13 +389,108 @@ namespace UnitTests
 
             Assert.IsFalse(areEqual);
         }
+        public void UnitTests_EqualsOperatorsWithEqualTimePeriods()
+        {
+            var p1 = new TimePeriod(94987);
+            var p2 = new TimePeriod(94987);
+            bool areEqual = p1 == p2;
+            Assert.IsTrue(true);
+        }
+
+
+        public void UnitTests_EqualsOperatorsWithDifferentTimePeriods()
+        {
+            var p1 = new TimePeriod(5326);
+            var p2 = new TimePeriod(5329);
+
+            bool areEqual = p1!=p2;
+
+            Assert.IsTrue(areEqual);
+        }
     }
     #endregion
-    #region Operator tests ===================================
+    #region operators tests ===================================
+    [TestClass]
+    public class UnitTestsTimeOperators
+    {
+        [TestMethod, TestCategory("Operators")]
+        public void UnitTests_overloading_PlusSign_TwoTimes()
+        {
+            var t1 = new Time(10, 20, 30);
+            var t2 = new Time(4, 50, 0);
+
+            var expectedTime = new Time(15, 10, 30);
+
+            Time actualTime = t1 + t2;
+
+            Assert.AreEqual(expectedTime, actualTime);
+        }
+        [TestMethod, TestCategory("Operators")]
+        public void UnitTests_overloading_PlusSign_TimeAndTimePeriod()
+        {
+            var t1 = new Time(10, 20, 30);
+            var t2 = new TimePeriod(36000);
+
+            var expectedTime = new Time(20, 20, 30);
+
+            Time actualTime = t1 + t2;
+
+            Assert.AreEqual(expectedTime, actualTime);
+        }
+        [TestMethod, TestCategory("Operators")]
+        public void UnitTests_overloading_Increment()
+        {
+            var t1 = new Time(10, 20, 30);
+
+            var expectedTime = new Time(10, 20, 31);
+
+            Assert.AreEqual(expectedTime.Hours, t1.Hours);
+            Assert.AreEqual(expectedTime.Minutes, t1.Minutes);
+            Assert.AreEqual(expectedTime.Seconds, t1.Seconds + 1);
+        }
+        [TestMethod, TestCategory("Operators")]
+        public void UnitTests_overloading_Decrement()
+        {
+            var t1 = new Time(10, 20, 30);
+
+            var expectedTime = new Time(10, 20, 29);
+
+            Assert.AreEqual(expectedTime.Hours, t1.Hours);
+            Assert.AreEqual(expectedTime.Minutes, t1.Minutes);
+            Assert.AreEqual(expectedTime.Seconds, t1.Seconds - 1);
+        }
+        [TestMethod, TestCategory("Operators")]
+        [DataRow((byte)10, (byte)20, (byte)30, 2, (byte)5, (byte)10, (byte)15)]
+        [DataRow((byte)4, (byte)50, (byte)0, 2, (byte)2, (byte)25, (byte)0)]
+        [DataRow((byte)9, (byte)12, (byte)15, 3, (byte)3, (byte)4, (byte)5)]
+        public void UnitTests_overloading_Division(byte h, byte m, byte s, int x, byte expectedH, byte expectedM, byte expectedS)
+        {
+            var t1 = new Time(h, m, s);
+            Time actualTime = t1 / x;
+            var expectedTime = new Time(expectedH, expectedM, expectedS);
+
+            Assert.AreEqual(actualTime, expectedTime);
+        }
+        [TestMethod, TestCategory("Operators")]
+        [DataRow((byte)10, (byte)20, (byte)30, 2, (byte)20, (byte)41, (byte)0)]
+        [DataRow((byte)4, (byte)50, (byte)0, 2, (byte)9, (byte)40, (byte)0)]
+        [DataRow((byte)3, (byte)12, (byte)15, 3, (byte)9, (byte)36, (byte)45)]
+        public void UnitTests_overloading_Multiplication(byte h, byte m, byte s, int x, byte expectedH, byte expectedM, byte expectedS)
+        {
+            var t1 = new Time(h, m, s);
+            Time actualTime = x * t1;
+            var expectedTime = new Time(expectedH, expectedM, expectedS);
+
+            Assert.AreEqual(actualTime, expectedTime);
+        }
+
+    }
+
+    [TestClass]
     public class UnitTestsTimePeriodOperators
     {
         [TestMethod, TestCategory("Operators")]
-        public void UnitTests_overloading_PlusSign_TwoTimePeriod()
+        public void UnitTests_overloading_PlusSign_TwoTimePeriods()
         {
             var t1 = new TimePeriod(13723);
             var t2 = new TimePeriod(1500);
@@ -406,7 +508,7 @@ namespace UnitTests
 
             var expectedTime = new TimePeriod(13724);
 
-            Assert.AreEqual(expectedTime, t1.TimeLength + 1);
+            Assert.AreEqual(expectedTime.TimeLength, t1.TimeLength + 1);
         }
         [TestMethod, TestCategory("Operators")]
         public void UnitTests_overloading_Decrement()
@@ -415,7 +517,7 @@ namespace UnitTests
 
             var expectedTime = new TimePeriod(13722);
 
-            Assert.AreEqual(expectedTime, t1.TimeLength - 1);
+            Assert.AreEqual(expectedTime.TimeLength, t1.TimeLength - 1);
         }
         [TestMethod, TestCategory("Operators")]
         [DataRow(5000, 2, 10000)]
@@ -427,7 +529,7 @@ namespace UnitTests
             TimePeriod actualTime = x * t1;
             var expectedTime = new TimePeriod(expectedSeconds);
 
-            Assert.AreEqual(actualTime, expectedSeconds);
+            Assert.AreEqual(actualTime, expectedTime);
         }
         [TestMethod, TestCategory("Operators")]
         [DataRow(5000, 2, 2500)]
@@ -439,12 +541,118 @@ namespace UnitTests
             TimePeriod actualTime = t1 / x;
             var expectedTime = new TimePeriod(expectedSeconds);
 
-            Assert.AreEqual(actualTime, expectedSeconds);
+            Assert.AreEqual(actualTime, expectedTime);
+        }
+    }
+    #endregion
+    #region Comparsion tests
+    [TestClass]
+    public class UnitTestsTimeComparsionOperators
+    {
+            [TestMethod, TestCategory("ComparsionOperators")]
+            [DataTestMethod]
+            [DataRow((byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)1)]
+            [DataRow((byte)0, (byte)0, (byte)0, (byte)0, (byte)1, (byte)0)]
+            [DataRow((byte)0, (byte)0, (byte)0, (byte)1, (byte)0, (byte)0)]
+            public void LessThan_Operator_ReturnsTrue(byte h1, byte m1, byte s1, byte h2, byte m2, byte s2)
+            {
+                var t1 = new Time(h1, m1, s1);
+                var t2 = new Time(h2, m2, s2);
+
+                Assert.IsTrue(t1 < t2);
+            }
+            [TestMethod, TestCategory("ComparsionOperators")]
+            [DataTestMethod]
+            [DataRow((byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0)]
+            [DataRow((byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)1)]
+            [DataRow((byte)0, (byte)0, (byte)1, (byte)0, (byte)1, (byte)0)]
+            public void LessThanOrEqual_Operator_ReturnsTrue(byte h1, byte m1, byte s1, byte h2, byte m2, byte s2)
+            {
+                var t1 = new Time(h1, m1, s1);
+                var t2 = new Time(h2, m2, s2);
+
+                Assert.IsTrue(t1 <= t2);
+            }
+            [TestMethod, TestCategory("ComparsionOperators")]
+            [DataTestMethod]
+            [DataRow((byte)0, (byte)0, (byte)1, (byte)0, (byte)0, (byte)0)]
+            [DataRow((byte)0, (byte)1, (byte)0, (byte)0, (byte)0, (byte)0)]
+            [DataRow((byte)1, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0)]
+            public void GreaterThan_Operator_ReturnsTrue(byte h1, byte m1, byte s1, byte h2, byte m2, byte s2)
+            {
+                var t1 = new Time(h1, m1, s1);
+                var t2 = new Time(h2, m2, s2);
+
+                Assert.IsTrue(t1 > t2);
+            }
+            [TestMethod, TestCategory("ComparsionOperators")]
+            [DataTestMethod]
+            [DataRow((byte)0, (byte)0, (byte)0, (byte)0, (byte)0, (byte)0)]
+            [DataRow((byte)0, (byte)0, (byte)1, (byte)0, (byte)0, (byte)0)]
+            [DataRow((byte)0, (byte)1, (byte)0, (byte)0, (byte)0, (byte)0)]
+            public void GreaterThanOrEqual_Operator_ReturnsTrue(byte h1, byte m1, byte s1, byte h2, byte m2, byte s2)
+            {
+                var t1 = new Time(h1, m1, s1);
+                var t2 = new Time(h2, m2, s2);
+
+                Assert.IsTrue(t1 >= t2);
+            }
+
+    }
+    [TestClass]
+    public class UnitTestsTimePeriodComparsionOperators
+    {
+        [TestMethod, TestCategory("ComparsionOperators")]
+        [DataTestMethod]
+        [DataRow(677, 838)]
+        [DataRow(3124, 10000)]
+        [DataRow(4232, 4233)]
+        public void LessThan_Operator_ReturnsTrue(long s1, long s2)
+        {
+            var t1 = new TimePeriod(s1);
+            var t2 = new TimePeriod(s2);
+
+            Assert.IsTrue(t1 < t2);
+        }
+        [TestMethod, TestCategory("ComparsionOperators")]
+        [DataTestMethod]
+        [DataRow(734, 853)]
+        [DataRow(10000, 10000)]
+        [DataRow(4233, 4233)]
+        public void LessThanOrEqual_Operator_ReturnsTrue(long s1, long s2)
+        {
+            var t1 = new TimePeriod(s1);
+            var t2 = new TimePeriod(s2);
+
+            Assert.IsTrue(t1 <= t2);
+        }
+        [TestMethod, TestCategory("ComparsionOperators")]
+        [DataTestMethod]
+        [DataRow(853,300)]
+        [DataRow(10030, 10000)]
+        [DataRow(4234, 4233)]
+        public void GreaterThan_Operator_ReturnsTrue(long s1, long s2)
+        {
+            var t1 = new TimePeriod(s1);
+            var t2 = new TimePeriod(s2);
+
+            Assert.IsTrue(t1 > t2);
+        }
+        [TestMethod, TestCategory("ComparsionOperators")]
+        [DataTestMethod]
+        [DataRow(730, 436)]
+        [DataRow(40000, 40000)]
+        [DataRow(767, 767)]
+        public void GreaterThanOrEqual_Operator_ReturnsTrue(long s1, long s2)
+        {
+            var t1 = new TimePeriod(s1);
+            var t2 = new TimePeriod(s2);
+
+            Assert.IsTrue(t1 >= t2);
         }
     }
     #endregion
 }
-
 
 
 
